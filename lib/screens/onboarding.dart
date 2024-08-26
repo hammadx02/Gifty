@@ -189,7 +189,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 fontWeight: FontWeight.bold,
                 color: Colors.grey.shade700,
               ),
-            )
+            ),
           ],
         ),
       ),
