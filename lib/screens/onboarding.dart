@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,27 +12,53 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen>
     with TickerProviderStateMixin {
-  late AnimationController _controller;
+  late AnimationController _rotationController;
   late Animation<double> _rotationAnimation;
+  late AnimationController _bounceControllerGoogle;
+  late AnimationController _bounceControllerCreate;
+  late Animation<double> _bounceAnimationGoogle;
+  late Animation<double> _bounceAnimationCreate;
 
   @override
   void initState() {
     super.initState();
 
     // Initialize the rotation controller
-    _controller = AnimationController(
+    _rotationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 20),
     )..repeat();
 
     // Animation for rotating the icons
     _rotationAnimation =
-        Tween<double>(begin: 0, end: 2 * pi).animate(_controller);
+        Tween<double>(begin: 0, end: 2 * pi).animate(_rotationController);
+
+    // Initialize the bounce controllers
+    _bounceControllerGoogle = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+
+    _bounceControllerCreate = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+
+    // Bounce animations
+    _bounceAnimationGoogle = Tween<double>(begin: 1.0, end: 0.8)
+        .chain(CurveTween(curve: Curves.bounceInOut))
+        .animate(_bounceControllerGoogle);
+
+    _bounceAnimationCreate = Tween<double>(begin: 1.0, end: 0.8)
+        .chain(CurveTween(curve: Curves.bounceInOut))
+        .animate(_bounceControllerCreate);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _rotationController.dispose();
+    _bounceControllerGoogle.dispose();
+    _bounceControllerCreate.dispose();
     super.dispose();
   }
 
@@ -71,7 +96,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     ),
                   ),
                 ),
-
                 Transform.rotate(
                   angle: -pi / 12, // Rotate the gift icon by 15 degrees
                   child: Container(
@@ -128,37 +152,47 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 const SizedBox(
                   height: 30,
                 ),
-                AnimatedContainer(
-                  duration: const Duration(seconds: 2),
-                  curve: Curves.elasticIn,
-                  child: Container(
-                    height: 53,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.pinkAccent.withOpacity(0.010),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.pinkAccent.withOpacity(0.60),
-                      ),
-                    ),
-                    child: ListTile(
-                      minLeadingWidth: 0,
-                      minTileHeight: 20,
-                      minVerticalPadding: 0,
-                      contentPadding: const EdgeInsets.all(12),
-                      leading: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: Image.asset(
-                          'assets/icons/google.png',
+                GestureDetector(
+                  onTap: () {
+                    _bounceControllerGoogle.forward().then((value) {
+                      _bounceControllerGoogle.reverse();
+                    });
+                  },
+                  child: ScaleTransition(
+                    scale: _bounceAnimationGoogle,
+                    child: Container(
+                      height: 53,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.pinkAccent.withOpacity(0.010),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.pinkAccent.withOpacity(0.60),
                         ),
                       ),
-                      title: Text(
-                        'Continue with Google',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                      child: Center(
+                        child: Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 30,
+                                width: 30,
+                                child: Image.asset(
+                                  'assets/icons/google.png',
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                'Continue with Google',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -167,23 +201,29 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 const SizedBox(
                   height: 12,
                 ),
-                AnimatedContainer(
-                  duration: const Duration(seconds: 2),
-                  curve: Curves.elasticIn,
-                  child: Container(
-                    height: 53,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.pinkAccent.shade200.withOpacity(0.80),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Create account',
-                        style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                GestureDetector(
+                  onTap: () {
+                    _bounceControllerCreate.forward().then((value) {
+                      _bounceControllerCreate.reverse();
+                    });
+                  },
+                  child: ScaleTransition(
+                    scale: _bounceAnimationCreate,
+                    child: Container(
+                      height: 53,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.pinkAccent.shade200.withOpacity(0.80),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Create account',
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
