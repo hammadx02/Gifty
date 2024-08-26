@@ -23,14 +23,12 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     // Initialize the rotation controller
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 15),
+      duration: const Duration(seconds: 20),
     )..repeat();
 
     // Animation for rotating the icons
     _rotationAnimation =
         Tween<double>(begin: 0, end: 2 * pi).animate(_controller);
-
-    // Animation for the glowing effect
   }
 
   @override
@@ -42,11 +40,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black54,
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30),
+            padding: const EdgeInsets.symmetric(vertical: 40),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -74,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     ),
                   ),
                 ),
-                // Gift Icon with Glow effect
+
                 Transform.rotate(
                   angle: -pi / 12, // Rotate the gift icon by 15 degrees
                   child: Container(
@@ -91,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             ),
           ),
           const SizedBox(
-            height: 60,
+            height: 50,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -131,34 +128,63 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 const SizedBox(
                   height: 30,
                 ),
-                Container(
-                  height: 53,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.pinkAccent.withOpacity(0.10),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.pinkAccent.withOpacity(0.60),
+                AnimatedContainer(
+                  duration: const Duration(seconds: 2),
+                  curve: Curves.elasticIn,
+                  child: Container(
+                    height: 53,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.pinkAccent.withOpacity(0.010),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.pinkAccent.withOpacity(0.60),
+                      ),
+                    ),
+                    child: ListTile(
+                      minLeadingWidth: 0,
+                      minTileHeight: 20,
+                      minVerticalPadding: 0,
+                      contentPadding: const EdgeInsets.all(12),
+                      leading: SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: Image.asset(
+                          'assets/icons/google.png',
+                        ),
+                      ),
+                      title: Text(
+                        'Continue with Google',
+                        style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 12,
                 ),
-                Container(
-                  height: 53,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.pinkAccent.shade200.withOpacity(0.80),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Create account',
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                AnimatedContainer(
+                  duration: const Duration(seconds: 2),
+                  curve: Curves.elasticIn,
+                  child: Container(
+                    height: 53,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.pinkAccent.shade200.withOpacity(0.80),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Create account',
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -232,7 +258,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       (index) {
         return AnimatedBuilder(
           animation: _rotationAnimation,
-          child: Image.asset(iconPaths[index], width: 40),
+          child: SizedBox(
+            height: 50,
+            width: 50,
+            child: Image.asset(
+              iconPaths[index],
+            ),
+          ),
           builder: (context, child) {
             final angle = iconAngles[index] + _rotationAnimation.value;
             return Transform.translate(
