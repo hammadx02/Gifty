@@ -91,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             ),
           ),
           const SizedBox(
-            height: 40,
+            height: 60,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -143,16 +143,23 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 12,
                 ),
                 Container(
                   height: 53,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.pinkAccent.withOpacity(0.10),
+                    color: Colors.pinkAccent.shade200.withOpacity(0.80),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.pinkAccent.withOpacity(0.60),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Create account',
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
