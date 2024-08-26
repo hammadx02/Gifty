@@ -62,6 +62,8 @@
 //   }
 // }
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
@@ -126,26 +128,28 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     gradient: RadialGradient(
                       colors: [
                         Colors.pinkAccent.shade100,
+                      
                         Colors.black54,
                       ],
                     ),
                   ),
                 ),
+                BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 100.0,
+                    sigmaY: 100.0,
+                  ),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ),
                 // Gift Icon with Glow effect
                 Transform.rotate(
-                  angle: -pi / 12, // Rotate the gift icon by 15 degrees
+                  angle: - pi / 12, // Rotate the gift icon by 15 degrees
                   child: Container(
                     padding: const EdgeInsets.all(8),
-                    // decoration: BoxDecoration(
-                    //   shape: BoxShape.circle,
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       color: Colors.pinkAccent.withOpacity(_glowAnimation.value),
-                    //       blurRadius: 20,
-                    //       spreadRadius: 10,
-                    //     ),
-                    //   ],
-                    // ),
                     child: Image.asset(
                       'assets/icons/gift.png',
                       scale: 1.3,
