@@ -45,11 +45,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     );
 
     // Bounce animations
-    _bounceAnimationGoogle = Tween<double>(begin: 1.0, end: 0.8)
+    _bounceAnimationGoogle = Tween<double>(begin: 1.0, end: 0.95)
         .chain(CurveTween(curve: Curves.bounceInOut))
         .animate(_bounceControllerGoogle);
 
-    _bounceAnimationCreate = Tween<double>(begin: 1.0, end: 0.8)
+    _bounceAnimationCreate = Tween<double>(begin: 1.0, end: 0.95)
         .chain(CurveTween(curve: Curves.bounceInOut))
         .animate(_bounceControllerCreate);
   }
@@ -97,7 +97,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   ),
                 ),
                 Transform.rotate(
-                  angle: -pi / 12, // Rotate the gift icon by 15 degrees
+                  angle: -pi / 12, // Rotate the gift icon by 12 degrees
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     child: Image.asset(
