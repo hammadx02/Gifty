@@ -1,67 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-
-// class OnboardingScreen extends StatefulWidget {
-//   const OnboardingScreen({super.key});
-
-//   @override
-//   State<OnboardingScreen> createState() => _OnboardingScreenState();
-// }
-
-// class _OnboardingScreenState extends State<OnboardingScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.black54,
-//       body: Column(
-//         children: [
-//           Container(
-//             width: double.infinity,
-//             height: 500,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.circle,
-//               gradient: RadialGradient(
-//                 colors: [
-//                   Colors.pinkAccent.shade100,
-//                   Colors.black54,
-//                 ],
-//               ),
-//             ),
-//             child: Center(
-//               child: Image.asset(
-//                 'assets/icons/gift.png',
-//                 scale: 1.3,
-//               ),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 30,
-//           ),
-//           RichText(
-//             text: TextSpan(
-//               text: 'Welcome to ',
-//               style: GoogleFonts.poppins(
-//                 fontSize: 32,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//               children: [
-//                 TextSpan(
-//                   text: 'Gifty',
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 32,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.pinkAccent.shade100,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -79,7 +15,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _rotationAnimation;
-  late Animation<double> _glowAnimation;
 
   @override
   void initState() {
@@ -96,12 +31,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         Tween<double>(begin: 0, end: 2 * pi).animate(_controller);
 
     // Animation for the glowing effect
-    _glowAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
   }
 
   @override
@@ -112,12 +41,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black54,
-        body: Column(
-          children: [
-            Stack(
+    return Scaffold(
+      // backgroundColor: Colors.black54,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30),
+            child: Stack(
               alignment: Alignment.center,
               children: [
                 Container(
@@ -127,9 +57,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        Colors.pinkAccent.shade100,
-                      
-                        Colors.black54,
+                        Colors.pinkAccent.shade100.withOpacity(0.80),
+                        Colors.pinkAccent.shade100.withOpacity(0.050),
                       ],
                     ),
                   ),
@@ -147,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ),
                 // Gift Icon with Glow effect
                 Transform.rotate(
-                  angle: - pi / 12, // Rotate the gift icon by 15 degrees
+                  angle: -pi / 12, // Rotate the gift icon by 15 degrees
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     child: Image.asset(
@@ -160,42 +89,117 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ..._buildRotatingIcons(),
               ],
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            RichText(
-              text: TextSpan(
-                text: 'Welcome to ',
-                style: GoogleFonts.poppins(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-                children: [
-                  TextSpan(
-                    text: 'Gifty',
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: 'Welcome to ',
                     style: GoogleFonts.poppins(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Colors.pinkAccent.shade100,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Gifty',
+                        style: GoogleFonts.poppins(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.pinkAccent.shade100,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Find out what your friends want without killing the surprise!',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  height: 53,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.pinkAccent.withOpacity(0.10),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.pinkAccent.withOpacity(0.60),
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 53,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.pinkAccent.withOpacity(0.10),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.pinkAccent.withOpacity(0.60),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: 'By tapping "create account" you agree to our ',
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade700,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Privacy Policy ',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'and ',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Terms of Service',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Find out what your friends want without killing the surprise!',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade700,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -216,18 +220,21 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       (index) => (2 * pi / iconCount) * index,
     );
 
-    return List.generate(iconPaths.length, (index) {
-      return AnimatedBuilder(
-        animation: _rotationAnimation,
-        child: Image.asset(iconPaths[index], width: 40),
-        builder: (context, child) {
-          final angle = iconAngles[index] + _rotationAnimation.value;
-          return Transform.translate(
-            offset: Offset(150 * cos(angle), 150 * sin(angle)),
-            child: child,
-          );
-        },
-      );
-    });
+    return List.generate(
+      iconPaths.length,
+      (index) {
+        return AnimatedBuilder(
+          animation: _rotationAnimation,
+          child: Image.asset(iconPaths[index], width: 40),
+          builder: (context, child) {
+            final angle = iconAngles[index] + _rotationAnimation.value;
+            return Transform.translate(
+              offset: Offset(150 * cos(angle), 150 * sin(angle)),
+              child: child,
+            );
+          },
+        );
+      },
+    );
   }
 }
