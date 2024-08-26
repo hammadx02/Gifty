@@ -26,7 +26,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ],
               ),
             ),
+            child: Center(
+              child: Image.asset(
+                'assets/icons/gift.png',
+                scale: 1.3,
+              ),
+            ),
           ),
+          SizedBox(height: 30,),
+          
         ],
       ),
     );
