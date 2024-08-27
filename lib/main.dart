@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Gifty',
       theme: ThemeData.dark(),
-      home: const OnboardingScreen(),
+      // home: const OnboardingScreen(),
     );
   }
 }
