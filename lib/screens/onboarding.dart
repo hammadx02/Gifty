@@ -97,7 +97,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   ),
                 ),
                 Transform.rotate(
-                  angle: -pi / 12, // Rotate the gift icon by 12 degrees
+                  angle: -pi / 12,
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     child: Image.asset(
